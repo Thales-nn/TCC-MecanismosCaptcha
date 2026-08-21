@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CAPTCHA - TCC</title>
+
+    <link rel="stylesheet"
+          href="/css/captcha.css">
+
+</head>
+
+<body>
+
+<div class="captcha-container">
+
+    <div class="captcha-card">
+
+        <div class="captcha-header">
+
+            <div class="shield">
+                🛡️
+            </div>
+
+            <div>
+
+                <h1>
+                    Verificação de segurança
+                </h1>
+
+                <p>
+                    Digite o código apresentado abaixo
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="captcha-area">
+
+            <canvas
+                id="captchaCanvas"
+                width="320"
+                height="100">
+            </canvas>
+
+            <button
+                type="button"
+                id="refreshCaptcha"
+                class="refresh-button">
+
+                ↻ Novo código
+
+            </button>
+
+        </div>
+
+
+        <form id="captchaForm">
+
+            <label for="codigo">
+                Código de verificação
+            </label>
+
+            <input
+                type="text"
+                id="codigo"
+                name="codigo"
+                maxlength="6"
+                autocomplete="off"
+                placeholder="Digite o código"
+                required>
+
+            <button
+                type="submit"
+                class="verificar-button">
+
+                Verificar CAPTCHA
+
+            </button>
+
+        </form>
+
+
+        <div
+            id="mensagem"
+            class="mensagem">
+        </div>
+
+
+        <div class="separador"></div>
+
+
+        <div class="resultado-area">
+
+            <a
+                href="/resultados"
+                class="resultados-button">
+
+                📊 Ver resultados
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="/js/captcha.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Resultados - TCC CAPTCHA</title>
+
+    <link rel="stylesheet"
+          href="/css/resultado.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                🛡️
+            </div>
+
+            <div class="logo-text">
+
+                <strong>CAPTCHA</strong>
+
+                <span>
+                    TCC Analytics
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <nav>
+
+            <a href="/resultados"
+               class="menu-ativo">
+
+                📊 Resultados
+
+            </a>
+
+
+            <a href="/captcha">
+
+                🧪 Testes
+
+            </a>
+
+
+            <a href="/resultados">
+
+                📈 Métricas
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            🔒
+
+            <div>
+
+                <strong>
+                    Sistema seguro
+                </strong>
+
+                <small>
+                    CAPTCHA ativo
+                </small>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <main class="conteudo">
+
+        <header class="topo">
+
+            <div>
+
+                <span class="titulo-pequeno">
+                    ANÁLISE DA SESSÃO
+                </span>
+
+                <h1>
+                    Resultados do CAPTCHA
+                </h1>
+
+                <p>
+                    Veja o desempenho das tentativas realizadas.
+                </p>
+
+            </div>
+
+
+            <div class="sessao">
+
+                <span class="status-online"></span>
+
+                Sessão ativa
+
+            </div>
+
+        </header>
+
+
+        <section class="metricas">
+
+            <div class="card">
+
+                <div class="card-topo">
+
+                    <span>
+                        Total de tentativas
+                    </span>
+
+                    <div class="card-icone">
+                        🔢
+                    </div>
+
+                </div>
+
+                <strong id="total">
+                    0
+                </strong>
+
+                <small>
+                    Tentativas realizadas
+                </small>
+
+            </div>
+
+
+            <div class="card sucesso">
+
+                <div class="card-topo">
+
+                    <span>
+                        Sucessos
+                    </span>
+
+                    <div class="card-icone">
+                        ✓
+                    </div>
+
+                </div>
+
+                <strong id="sucessos">
+                    0
+                </strong>
+
+                <small>
+                    CAPTCHAs resolvidos
+                </small>
+
+            </div>
+
+
+            <div class="card erro">
+
+                <div class="card-topo">
+
+                    <span>
+                        Erros
+                    </span>
+
+                    <div class="card-icone">
+                        ✕
+                    </div>
+
+                </div>
+
+                <strong id="erros">
+                    0
+                </strong>
+
+                <small>
+                    Tentativas incorretas
+                </small>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-topo">
+
+                    <span>
+                        Taxa de sucesso
+                    </span>
+
+                    <div class="card-icone">
+                        %
+                    </div>
+
+                </div>
+
+                <strong id="taxaSucesso">
+                    0%
+                </strong>
+
+                <small>
+                    Eficiência
+                </small>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-topo">
+
+                    <span>
+                        Tempo médio
+                    </span>
+
+                    <div class="card-icone">
+                        ⏱
+                    </div>
+
+                </div>
+
+                <strong id="tempoMedio">
+                    0 ms
+                </strong>
+
+                <small>
+                    Tempo por tentativa
+                </small>
+
+            </div>
+
+        </section>
+
+
+        <section class="graficos">
+
+            <div class="painel">
+
+                <div class="painel-cabecalho">
+
+                    <h2>
+                        Desempenho da sessão
+                    </h2>
+
+                    <p>
+                        Sucessos e erros
+                    </p>
+
+                </div>
+
+                <div class="canvas-container">
+
+                    <canvas
+                        id="graficoResultados">
+                    </canvas>
+
+                </div>
+
+            </div>
+
+
+            <div class="painel">
+
+                <div class="painel-cabecalho">
+
+                    <h2>
+                        Tempo por tentativa
+                    </h2>
+
+                    <p>
+                        Tempo gasto em cada tentativa
+                    </p>
+
+                </div>
+
+                <div class="canvas-container">
+
+                    <canvas
+                        id="graficoTempo">
+                    </canvas>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="painel tabela-painel">
+
+            <div class="painel-cabecalho">
+
+                <h2>
+                    Detalhamento das tentativas
+                </h2>
+
+                <p>
+                    Histórico das tentativas
+                </p>
+
+            </div>
+
+
+            <div class="tabela-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Tentativa
+                            </th>
+
+                            <th>
+                                Resultado
+                            </th>
+
+                            <th>
+                                Tempo
+                            </th>
+
+                            <th>
+                                Tipo de usuário
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="tabelaResultados">
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <div class="acoes">
+
+            <a
+                href="/"
+                class="botao-voltar">
+
+                ← Voltar para o login
+
+            </a>
+
+
+            <a
+                href="/captcha"
+                class="botao-novo">
+
+                Fazer novo teste
+
+                <span>
+                    →
+                </span>
+
+            </a>
+
+        </div>
+
+
+        <footer>
+
+            🛡️
+
+            TCC — Efetividade de Mecanismos CAPTCHA
+
+        </footer>
+
+    </main>
+
+</div>
+
+
+<script src="/js/resultados.js"></script>
+
+</body>
+
+</html>

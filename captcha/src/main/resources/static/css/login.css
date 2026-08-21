@@ -1,0 +1,343 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+
+    min-height: 100vh;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eef1f5,
+            #dfe4ea
+        );
+
+    color: #222;
+}
+
+
+/* =================================
+   PÁGINA
+================================= */
+
+.pagina {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 20px;
+}
+
+
+/* =================================
+   CARD
+================================= */
+
+.login-card {
+
+    width: 100%;
+
+    max-width: 420px;
+
+    background: #ffffff;
+
+    padding: 42px;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 15px 45px
+        rgba(0, 0, 0, 0.12);
+
+    animation:
+        aparecer 0.5s ease;
+}
+
+
+/* =================================
+   ANIMAÇÃO
+================================= */
+
+@keyframes aparecer {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(15px);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+
+/* =================================
+   LOGO
+================================= */
+
+.logo {
+
+    width: 70px;
+
+    height: 70px;
+
+    margin:
+        0 auto 20px;
+
+    border-radius: 50%;
+
+    background: #f0f2f5;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 35px;
+}
+
+
+/* =================================
+   TÍTULO
+================================= */
+
+h1 {
+
+    margin: 0;
+
+    text-align: center;
+
+    font-size: 29px;
+}
+
+
+.subtitulo {
+
+    margin:
+        10px 0 30px;
+
+    text-align: center;
+
+    color: #707070;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+}
+
+
+/* =================================
+   CAMPOS
+================================= */
+
+.campo {
+
+    margin-bottom: 20px;
+}
+
+
+.campo label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 14px;
+
+    font-weight: bold;
+}
+
+
+.campo input {
+
+    width: 100%;
+
+    padding:
+        14px 15px;
+
+    border:
+        1px solid #d0d0d0;
+
+    border-radius: 9px;
+
+    background: #fafafa;
+
+    font-size: 15px;
+
+    transition:
+        0.2s;
+}
+
+
+.campo input:focus {
+
+    outline: none;
+
+    border-color: #333;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(0, 0, 0, 0.07);
+}
+
+
+.campo input::placeholder {
+
+    color: #aaa;
+}
+
+
+/* =================================
+   ERRO
+================================= */
+
+.mensagem-erro {
+
+    display: flex;
+
+    gap: 8px;
+
+    align-items: center;
+
+    padding: 11px;
+
+    margin-bottom: 18px;
+
+    border-radius: 8px;
+
+    background: #fff0f0;
+
+    color: #c62828;
+
+    font-size: 14px;
+}
+
+
+/* =================================
+   BOTÃO
+================================= */
+
+button {
+
+    width: 100%;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #222;
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        0.2s;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+button:hover {
+
+    background: #444;
+
+    transform:
+        translateY(-1px);
+}
+
+
+button:active {
+
+    transform:
+        translateY(0);
+}
+
+
+button span {
+
+    font-size: 20px;
+}
+
+
+/* =================================
+   RODAPÉ
+================================= */
+
+.rodape {
+
+    margin-top: 28px;
+
+    padding-top: 20px;
+
+    border-top:
+        1px solid #eeeeee;
+
+    text-align: center;
+
+    color: #888;
+
+    font-size: 12px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 6px;
+}
+
+
+/* =================================
+   CELULAR
+================================= */
+
+@media (max-width: 500px) {
+
+    .login-card {
+
+        padding: 30px 25px;
+
+    }
+
+    h1 {
+
+        font-size: 25px;
+
+    }
+}

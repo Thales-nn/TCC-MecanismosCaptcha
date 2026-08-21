@@ -1,0 +1,15 @@
+# Java/Maven build output
+captcha/target/
+
+# Python cache and local environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Local IDE settings
+.idea/
+
+# OS files
+Thumbs.db
+.DS_Store

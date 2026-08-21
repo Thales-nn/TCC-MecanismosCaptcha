@@ -1,0 +1,479 @@
+/* =========================================
+   CONFIGURAÇÕES GERAIS
+========================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+body {
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eef4ff,
+            #f8fafc
+        );
+
+    color: #1e293b;
+}
+
+
+/* =========================================
+   CONTAINER
+========================================= */
+
+.captcha-container {
+
+    width: 100%;
+
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 30px;
+}
+
+
+/* =========================================
+   CARD
+========================================= */
+
+.captcha-card {
+
+    width: 100%;
+
+    max-width: 470px;
+
+    background: white;
+
+    border-radius: 18px;
+
+    padding: 35px;
+
+    box-shadow:
+        0 20px 50px
+        rgba(15, 23, 42, 0.12);
+
+    border:
+        1px solid #e5e7eb;
+}
+
+
+/* =========================================
+   CABEÇALHO
+========================================= */
+
+.captcha-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 30px;
+}
+
+
+.shield {
+
+    width: 55px;
+
+    height: 55px;
+
+    border-radius: 14px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #eff6ff;
+
+    font-size: 28px;
+}
+
+
+.captcha-header h1 {
+
+    font-size: 22px;
+
+    color: #0f172a;
+
+    margin-bottom: 5px;
+}
+
+
+.captcha-header p {
+
+    font-size: 14px;
+
+    color: #64748b;
+}
+
+
+/* =========================================
+   CAPTCHA
+========================================= */
+
+.captcha-area {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 25px;
+}
+
+
+#captchaCanvas {
+
+    width: 320px;
+
+    height: 100px;
+
+    max-width: 100%;
+
+    border-radius: 10px;
+
+    border:
+        1px solid #d1d5db;
+
+    background: #eeeeee;
+
+    display: block;
+}
+
+
+/* =========================================
+   NOVO CÓDIGO
+========================================= */
+
+.refresh-button {
+
+    background: transparent;
+
+    border: none;
+
+    color: #2563eb;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    padding: 5px 10px;
+
+    transition: 0.2s;
+}
+
+
+.refresh-button:hover {
+
+    color: #1d4ed8;
+
+    transform: scale(1.03);
+}
+
+
+/* =========================================
+   FORMULÁRIO
+========================================= */
+
+#captchaForm {
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+#captchaForm label {
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color: #334155;
+
+    margin-bottom: 8px;
+}
+
+
+/* =========================================
+   INPUT
+========================================= */
+
+#codigo {
+
+    width: 100%;
+
+    height: 50px;
+
+    padding: 0 15px;
+
+    border:
+        1px solid #cbd5e1;
+
+    border-radius: 9px;
+
+    outline: none;
+
+    font-size: 18px;
+
+    letter-spacing: 4px;
+
+    text-align: center;
+
+    color: #0f172a;
+
+    transition: 0.2s;
+}
+
+
+#codigo:focus {
+
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(37, 99, 235, 0.12);
+}
+
+
+#codigo::placeholder {
+
+    letter-spacing: 0;
+
+    color: #94a3b8;
+}
+
+
+/* =========================================
+   BOTÃO VERIFICAR
+========================================= */
+
+.verificar-button {
+
+    width: 100%;
+
+    height: 50px;
+
+    margin-top: 15px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #2563eb;
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.verificar-button:hover {
+
+    background: #1d4ed8;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 6px 15px
+        rgba(37, 99, 235, 0.25);
+}
+
+
+.verificar-button:disabled {
+
+    opacity: 0.6;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow: none;
+}
+
+
+/* =========================================
+   MENSAGEM
+========================================= */
+
+.mensagem {
+
+    min-height: 22px;
+
+    margin-top: 15px;
+
+    text-align: center;
+
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+
+.mensagem.sucesso {
+
+    color: #15803d;
+}
+
+
+.mensagem.erro {
+
+    color: #dc2626;
+}
+
+
+/* =========================================
+   SEPARADOR
+========================================= */
+
+.separador {
+
+    width: 100%;
+
+    height: 1px;
+
+    background: #e5e7eb;
+
+    margin: 20px 0;
+}
+
+
+/* =========================================
+   RESULTADOS
+========================================= */
+
+.resultado-area {
+
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+}
+
+
+.resultados-button {
+
+    width: 100%;
+
+    height: 48px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border:
+        1px solid #2563eb;
+
+    border-radius: 9px;
+
+    background: white;
+
+    color: #2563eb;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.resultados-button:hover {
+
+    background: #2563eb;
+
+    color: white;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 6px 15px
+        rgba(37, 99, 235, 0.15);
+}
+
+
+.resultados-button:active {
+
+    transform: translateY(0);
+}
+
+
+/* =========================================
+   CELULAR
+========================================= */
+
+@media (max-width: 600px) {
+
+    .captcha-container {
+
+        padding: 15px;
+    }
+
+
+    .captcha-card {
+
+        padding: 25px 20px;
+
+        border-radius: 14px;
+    }
+
+
+    .captcha-header h1 {
+
+        font-size: 19px;
+    }
+
+
+    #captchaCanvas {
+
+        width: 100%;
+
+        height: auto;
+    }
+
+}
