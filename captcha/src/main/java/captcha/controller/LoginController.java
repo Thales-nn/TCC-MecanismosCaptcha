@@ -2,6 +2,7 @@ package captcha.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,8 +38,19 @@ public class LoginController {
         return "captcha";
     }
 
+    @GetMapping("/captcha-slider")
+    public String captchaSlider() {
+        return "captcha_slider";
+    }
+
     @GetMapping("/resultados")
     public String resultados() {
         return "resultados";
+    }
+
+    @PostMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        request.getSession().invalidate();
+        return "redirect:/";
     }
 }
