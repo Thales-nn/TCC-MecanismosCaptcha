@@ -22,6 +22,8 @@ public class resultado {
 
     private String sessaoId;
 
+    private String metricasComportamentais;
+
 
     public Integer getId() {
         return id;
@@ -83,5 +85,14 @@ public class resultado {
 
     public void setSessaoId(String sessaoId) {
         this.sessaoId = sessaoId;
+    }
+
+
+    public String getMetricasComportamentais() {
+        return metricasComportamentais;
+    }
+
+    public void setMetricasComportamentais(String metricasComportamentais) {
+        this.metricasComportamentais = metricasComportamentais;
     }
 }

@@ -1,0 +1,649 @@
+/* =========================================
+   CONFIGURAÇÕES GERAIS
+========================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+body {
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eef4ff,
+            #f8fafc
+        );
+
+    color: #1e293b;
+}
+
+
+/* =========================================
+   CONTAINER
+========================================= */
+
+.captcha-container {
+
+    width: 100%;
+
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 30px;
+}
+
+
+/* =========================================
+   CARD
+========================================= */
+
+.captcha-card {
+
+    width: 100%;
+
+    max-width: 470px;
+
+    background: white;
+
+    border-radius: 18px;
+
+    padding: 35px;
+
+    box-shadow:
+        0 20px 50px
+        rgba(15, 23, 42, 0.12);
+
+    border:
+        1px solid #e5e7eb;
+}
+
+
+/* =========================================
+   CABEÇALHO
+========================================= */
+
+.captcha-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 30px;
+}
+
+
+.shield {
+
+    width: 55px;
+
+    height: 55px;
+
+    border-radius: 14px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #eff6ff;
+
+    font-size: 28px;
+}
+
+
+.captcha-header h1 {
+
+    font-size: 22px;
+
+    color: #0f172a;
+
+    margin-bottom: 5px;
+}
+
+
+.captcha-header p {
+
+    font-size: 14px;
+
+    color: #64748b;
+}
+
+
+/* =========================================
+   ÁREA DO SLIDER
+========================================= */
+
+.slider-area {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 14px;
+
+    margin-bottom: 20px;
+}
+
+
+.slider-instrucao {
+
+    font-size: 13px;
+
+    color: #64748b;
+
+    text-align: center;
+
+    margin-bottom: 4px;
+}
+
+
+/* =========================================
+   TRILHA DO SLIDER
+========================================= */
+
+.slider-trilha {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 56px;
+
+    background: #f1f5f9;
+
+    border:
+        1px solid #d1d5db;
+
+    border-radius: 12px;
+
+    overflow: hidden;
+
+    user-select: none;
+
+    touch-action: none;
+}
+
+
+/* =========================================
+   ZONA ALVO
+========================================= */
+
+.slider-zona-alvo {
+
+    position: absolute;
+
+    top: 0;
+
+    height: 100%;
+
+    width: 8%;
+
+    background:
+        rgba(
+            34,
+            197,
+            94,
+            0.18
+        );
+
+    border-left:
+        3px solid
+        #22c55e;
+
+    border-right:
+        3px solid
+        #22c55e;
+
+    z-index: 1;
+
+    transition: opacity 0.3s;
+}
+
+
+.slider-zona-alvo.validando {
+
+    opacity: 0;
+}
+
+
+/* =========================================
+   PROGRESSO
+========================================= */
+
+.slider-progresso {
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    height: 100%;
+
+    width: 0%;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(37, 99, 235, 0.12),
+            rgba(37, 99, 235, 0.22)
+        );
+
+    z-index: 2;
+
+    transition: width 0.05s linear;
+}
+
+
+/* =========================================
+   HANDLE (CONTROLE)
+========================================= */
+
+.slider-handle {
+
+    position: absolute;
+
+    top: 50%;
+
+    left: 0%;
+
+    transform:
+        translate(-50%, -50%);
+
+    width: 50px;
+
+    height: 50px;
+
+    border-radius: 12px;
+
+    background: #2563eb;
+
+    color: white;
+
+    font-size: 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    cursor: grab;
+
+    z-index: 3;
+
+    box-shadow:
+        0 4px 12px
+        rgba(37, 99, 235, 0.35);
+
+    transition: box-shadow 0.2s, background 0.2s;
+}
+
+
+.slider-handle:hover {
+
+    background: #1d4ed8;
+
+    box-shadow:
+        0 6px 16px
+        rgba(37, 99, 235, 0.45);
+}
+
+
+.slider-handle:active,
+.slider-handle.arrastando {
+
+    cursor: grabbing;
+
+    background: #1e40af;
+
+    box-shadow:
+        0 8px 20px
+        rgba(37, 99, 235, 0.50);
+}
+
+
+.slider-handle.sucesso {
+
+    background: #22c55e;
+
+    box-shadow:
+        0 4px 12px
+        rgba(34, 197, 94, 0.40);
+}
+
+
+.slider-handle.erro {
+
+    background: #dc2626;
+
+    box-shadow:
+        0 4px 12px
+        rgba(220, 38, 38, 0.40);
+
+    animation: tremer 0.4s;
+}
+
+
+.slider-handle-icone {
+
+    pointer-events: none;
+
+    font-weight: bold;
+
+    line-height: 1;
+}
+
+
+/* =========================================
+   ANIMAÇÃO TREMER
+========================================= */
+
+@keyframes tremer {
+
+    0%, 100% {
+        transform: translate(-50%, -50%);
+    }
+
+    25% {
+        transform: translate(-60%, -50%);
+    }
+
+    75% {
+        transform: translate(-40%, -50%);
+    }
+}
+
+
+/* =========================================
+   NOVO DESAFIO
+========================================= */
+
+.refresh-button {
+
+    background: transparent;
+
+    border: none;
+
+    color: #2563eb;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    padding: 5px 10px;
+
+    transition: 0.2s;
+}
+
+
+.refresh-button:hover {
+
+    color: #1d4ed8;
+
+    transform: scale(1.03);
+}
+
+
+/* =========================================
+   MENSAGEM
+========================================= */
+
+.mensagem {
+
+    min-height: 22px;
+
+    margin-top: 15px;
+
+    text-align: center;
+
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+
+.mensagem.sucesso {
+
+    color: #15803d;
+}
+
+
+.mensagem.erro {
+
+    color: #dc2626;
+}
+
+
+/* =========================================
+   MÉTRICAS PREVIEW
+========================================= */
+
+.metricas-preview {
+
+    margin-top: 20px;
+
+    padding: 18px;
+
+    background: #f8fafc;
+
+    border:
+        1px solid #e5e7eb;
+
+    border-radius: 12px;
+}
+
+
+.metricas-preview h3 {
+
+    font-size: 14px;
+
+    color: #334155;
+
+    margin-bottom: 14px;
+}
+
+
+.metricas-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 12px;
+}
+
+
+.metrica-item {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+
+.metrica-label {
+
+    font-size: 12px;
+
+    color: #64748b;
+
+    font-weight: 500;
+}
+
+
+.metrica-valor {
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    color: #0f172a;
+}
+
+
+/* =========================================
+   SEPARADOR
+========================================= */
+
+.separador {
+
+    width: 100%;
+
+    height: 1px;
+
+    background: #e5e7eb;
+
+    margin: 20px 0;
+}
+
+
+/* =========================================
+   RESULTADOS
+========================================= */
+
+.resultado-area {
+
+    width: 100%;
+
+    display: flex;
+
+    gap: 10px;
+
+    justify-content: center;
+}
+
+
+.resultados-button {
+
+    flex: 1;
+
+    height: 48px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border:
+        1px solid #2563eb;
+
+    border-radius: 9px;
+
+    background: white;
+
+    color: #2563eb;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.resultados-button.secundario {
+
+    border-color: #cbd5e1;
+
+    color: #475569;
+}
+
+
+.resultados-button.secundario:hover {
+
+    background: #f1f5f9;
+
+    transform: translateY(-1px);
+}
+
+
+.resultados-button:hover {
+
+    background: #2563eb;
+
+    color: white;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 6px 15px
+        rgba(37, 99, 235, 0.15);
+}
+
+
+.resultados-button:active {
+
+    transform: translateY(0);
+}
+
+
+/* =========================================
+   CELULAR
+========================================= */
+
+@media (max-width: 600px) {
+
+    .captcha-container {
+
+        padding: 15px;
+    }
+
+
+    .captcha-card {
+
+        padding: 25px 20px;
+
+        border-radius: 14px;
+    }
+
+
+    .captcha-header h1 {
+
+        font-size: 19px;
+    }
+
+
+    .metricas-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+}

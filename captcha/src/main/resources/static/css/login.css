@@ -156,7 +156,8 @@ h1 {
 }
 
 
-.campo label {
+.campo label,
+form label {
 
     display: block;
 
@@ -168,7 +169,8 @@ h1 {
 }
 
 
-.campo input {
+.campo input,
+form input {
 
     width: 100%;
 
@@ -186,10 +188,13 @@ h1 {
 
     transition:
         0.2s;
+
+    margin-bottom: 20px;
 }
 
 
-.campo input:focus {
+.campo input:focus,
+form input:focus {
 
     outline: none;
 
@@ -203,15 +208,78 @@ h1 {
 }
 
 
-.campo input::placeholder {
+.campo input::placeholder,
+form input::placeholder {
 
     color: #aaa;
+}
+
+
+.login-button {
+
+    width: 100%;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #222;
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+.login-button:hover {
+
+    background: #444;
+
+    transform: translateY(-1px);
+}
+
+
+.login-button:active {
+
+    transform: translateY(0);
 }
 
 
 /* =================================
    ERRO
 ================================= */
+
+.erro {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 11px;
+    margin-bottom: 18px;
+    border-radius: 8px;
+    background: #fff0f0;
+    color: #c62828;
+    font-size: 14px;
+}
+
+.erro:empty {
+    display: none;
+}
 
 .mensagem-erro {
 
@@ -320,6 +388,48 @@ button span {
     align-items: center;
 
     gap: 6px;
+}
+
+
+/* =================================
+   LOGIN INFO
+================================= */
+
+.login-info {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    text-align: center;
+}
+
+.login-info strong {
+    font-size: 13px;
+    color: #475569;
+    margin-bottom: 3px;
+}
+
+.login-info span {
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+.login-link-resultados {
+    display: block;
+    text-align: center;
+    margin-top: 18px;
+    font-size: 13px;
+    color: #94a3b8;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.login-link-resultados:hover {
+    color: #475569;
 }
 
 

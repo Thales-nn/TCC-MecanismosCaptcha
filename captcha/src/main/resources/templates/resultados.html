@@ -96,7 +96,7 @@
             <div>
 
                 <span class="titulo-pequeno">
-                    ANÁLISE DA SESSÃO
+                    ANÁLISE COMPARATIVA
                 </span>
 
                 <h1>
@@ -104,7 +104,7 @@
                 </h1>
 
                 <p>
-                    Veja o desempenho das tentativas realizadas.
+                    Compare a efetividade dos diferentes tipos de CAPTCHA.
                 </p>
 
             </div>
@@ -120,6 +120,80 @@
 
         </header>
 
+
+        <!-- =======================================
+             FILTROS
+        ======================================= -->
+
+        <section class="filtros">
+
+            <div class="filtro-grupo">
+
+                <label for="filtroTipoCaptcha">
+                    Tipo de CAPTCHA
+                </label>
+
+                <select id="filtroTipoCaptcha">
+
+                    <option value="TODOS">
+                        Todos
+                    </option>
+
+                    <option value="CAPTCHA_TEXTO">
+                        CAPTCHA Textual
+                    </option>
+
+                    <option value="CAPTCHA_DESLIZANTE">
+                        CAPTCHA Deslizante
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="filtro-grupo">
+
+                <label for="filtroTipoUsuario">
+                    Tipo de Usuário
+                </label>
+
+                <select id="filtroTipoUsuario">
+
+                    <option value="TODOS">
+                        Todos
+                    </option>
+
+                    <option value="HUMANO">
+                        Humano
+                    </option>
+
+                    <option value="BOT_1">
+                        Bot 1
+                    </option>
+
+                    <option value="BOT_2">
+                        Bot 2
+                    </option>
+
+                    <option value="BOT_SLIDER_1">
+                        Bot Slider 1
+                    </option>
+
+                    <option value="BOT_SLIDER_2">
+                        Bot Slider 2
+                    </option>
+
+                </select>
+
+            </div>
+
+        </section>
+
+
+        <!-- =======================================
+             MÉTRICAS GERAIS (respondem aos filtros)
+        ======================================= -->
 
         <section class="metricas">
 
@@ -250,6 +324,173 @@
         </section>
 
 
+        <!-- =======================================
+             CARDS COMPARATIVOS
+        ======================================= -->
+
+        <section class="comparativo">
+
+            <div class="comparativo-cabecalho">
+
+                <h2>
+                    Comparativo entre tipos de CAPTCHA
+                </h2>
+
+                <p>
+                    Taxa de bloqueio de bots, sucesso de humanos e tempo médio
+                </p>
+
+            </div>
+
+
+            <div class="comparativo-cards">
+
+                <div class="comparativo-card comparativo-texto">
+
+                    <div class="comparativo-card-topo">
+
+                        <span class="comparativo-badge">
+                            TEXTO
+                        </span>
+
+                        <h3>
+                            CAPTCHA Textual
+                        </h3>
+
+                    </div>
+
+
+                    <div class="comparativo-metrica">
+
+                        <span>
+                            Taxa de bloqueio (bots)
+                        </span>
+
+                        <strong id="bloqueioTexto">
+                            0%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="comparativo-metrica">
+
+                        <span>
+                            Taxa de sucesso (humanos)
+                        </span>
+
+                        <strong id="sucessoHumanoTexto">
+                            0%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="comparativo-metrica">
+
+                        <span>
+                            Taxa de erro (humanos)
+                        </span>
+
+                        <strong id="erroHumanoTexto">
+                            0%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="comparativo-metrica">
+
+                        <span>
+                            Tempo médio
+                        </span>
+
+                        <strong id="tempoMedioTexto">
+                            0 ms
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="comparativo-card comparativo-deslizante">
+
+                    <div class="comparativo-card-topo">
+
+                        <span class="comparativo-badge">
+                            DESLIZANTE
+                        </span>
+
+                        <h3>
+                            CAPTCHA Deslizante
+                        </h3>
+
+                    </div>
+
+
+                    <div class="comparativo-metrica">
+
+                        <span>
+                            Taxa de bloqueio (bots)
+                        </span>
+
+                        <strong id="bloqueioDeslizante">
+                            0%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="comparativo-metrica">
+
+                        <span>
+                            Taxa de sucesso (humanos)
+                        </span>
+
+                        <strong id="sucessoHumanoDeslizante">
+                            0%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="comparativo-metrica">
+
+                        <span>
+                            Taxa de erro (humanos)
+                        </span>
+
+                        <strong id="erroHumanoDeslizante">
+                            0%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="comparativo-metrica">
+
+                        <span>
+                            Tempo médio
+                        </span>
+
+                        <strong id="tempoMedioDeslizante">
+                            0 ms
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =======================================
+             GRÁFICOS
+        ======================================= -->
+
         <section class="graficos">
 
             <div class="painel">
@@ -304,6 +545,39 @@
         </section>
 
 
+        <!-- =======================================
+             GRÁFICO COMPARATIVO DE BARRAS
+        ======================================= -->
+
+        <section class="painel grafico-comparativo-painel">
+
+            <div class="painel-cabecalho">
+
+                <h2>
+                    Comparativo de bloqueio de bots
+                </h2>
+
+                <p>
+                    Taxa de bloqueio por tipo de CAPTCHA e tipo de bot
+                </p>
+
+            </div>
+
+            <div class="canvas-container">
+
+                <canvas
+                    id="graficoComparativo">
+                </canvas>
+
+            </div>
+
+        </section>
+
+
+        <!-- =======================================
+             TABELA
+        ======================================= -->
+
         <section class="painel tabela-painel">
 
             <div class="painel-cabecalho">
@@ -343,6 +617,10 @@
                                 Tipo de usuário
                             </th>
 
+                            <th>
+                                Tipo de CAPTCHA
+                            </th>
+
                         </tr>
 
                     </thead>
@@ -367,6 +645,13 @@
 
             </a>
 
+            <button
+                id="limparResultados"
+                class="botao-limpar">
+
+                🗑 Limpar resultados
+
+            </button>
 
             <a
                 href="/captcha"

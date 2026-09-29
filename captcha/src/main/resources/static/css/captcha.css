@@ -387,6 +387,8 @@ body {
     display: flex;
 
     justify-content: center;
+
+    gap: 12px;
 }
 
 
@@ -440,6 +442,26 @@ body {
 .resultados-button:active {
 
     transform: translateY(0);
+}
+
+
+.resultados-button.secundario {
+
+    border-color: #cbd5e1;
+
+    color: #475569;
+}
+
+
+.resultados-button.secundario:hover {
+
+    background: #f1f5f9;
+
+    color: #475569;
+
+    transform: translateY(-1px);
+
+    box-shadow: none;
 }
 
 

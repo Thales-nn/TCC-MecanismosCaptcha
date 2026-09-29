@@ -1,5 +1,6 @@
 import time
 import re
+import platform
 
 import cv2
 import numpy as np
@@ -21,9 +22,10 @@ NUMERO_TESTES = 50
 
 TIPO_BOT = "BOT_2"
 
-TESSERACT_PATH = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
-
-pytesseract.pytesseract.tesseract_cmd = TESSERACT_PATH
+if platform.system() == "Windows":
+    pytesseract.pytesseract.tesseract_cmd = (
+        r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+    )
 
 CARACTERES = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
 
@@ -45,6 +47,14 @@ sessao_id = (
 opcoes = Options()
 
 opcoes.add_argument("--start-maximized")
+
+import os
+
+chrome_win = "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe"
+
+if os.path.exists(chrome_win):
+
+    opcoes.binary_location = chrome_win
 
 driver = webdriver.Chrome(
     options=opcoes
