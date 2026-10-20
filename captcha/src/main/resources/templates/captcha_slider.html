@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CAPTCHA Deslizante - TCC</title>
+
+    <link rel="stylesheet"
+          href="/css/captcha_slider.css">
+
+</head>
+
+<body>
+
+<div class="captcha-container">
+
+    <div class="captcha-card">
+
+        <div class="captcha-header">
+
+            <div class="shield">
+                &#x1F512;
+            </div>
+
+            <div>
+
+                <h1>Verificacao deslizante</h1>
+
+                <p>Leve o ponto azul ate a area verde, solte e aguarde 2 segundos.</p>
+
+            </div>
+
+        </div>
+
+
+        <div class="slider-area">
+
+            <div class="slider-instrucao" id="sliderInstrucao">
+                <span>Arraste o controle ate a area verde. Evite a zona vermelha.</span>
+            </div>
+
+            <div class="slider-trilha" id="sliderTrilha">
+
+                <div class="slider-zona-alvo" id="sliderZonaAlvo"></div>
+
+                <div class="slider-armadilha" id="sliderArmadilha"></div>
+
+                <div class="slider-progresso" id="sliderProgresso"></div>
+
+                <div class="slider-handle" id="sliderHandle">
+                    <span class="slider-handle-icone">&equiv;</span>
+                </div>
+
+            </div>
+
+            <div class="slider-countdown" id="sliderCountdown" style="display:none;">
+                <div class="countdown-barra" id="countdownBarra"></div>
+                <span id="countdownTexto">Aguardando validacao...</span>
+            </div>
+
+            <button
+                type="button"
+                id="refreshSlider"
+                class="refresh-button">
+                &#x21bb; Novo desafio
+            </button>
+
+        </div>
+
+
+        <div
+            id="mensagem"
+            class="mensagem">
+        </div>
+
+
+        <div class="metricas-preview" id="metricasPreview" style="display:none;">
+
+            <h3>Metricas comportamentais</h3>
+
+            <div class="metricas-grid">
+
+                <div class="metrica-item">
+                    <span class="metrica-label">Velocidade media</span>
+                    <span class="metrica-valor" id="velMedia">&mdash;</span>
+                </div>
+
+                <div class="metrica-item">
+                    <span class="metrica-label">Velocidade maxima</span>
+                    <span class="metrica-valor" id="velMax">&mdash;</span>
+                </div>
+
+                <div class="metrica-item">
+                    <span class="metrica-label">Tempo total</span>
+                    <span class="metrica-valor" id="tempoTotal">&mdash;</span>
+                </div>
+
+                <div class="metrica-item">
+                    <span class="metrica-label">Mudancas de direcao</span>
+                    <span class="metrica-valor" id="mudancasDir">&mdash;</span>
+                </div>
+
+                <div class="metrica-item">
+                    <span class="metrica-label">Microajustes</span>
+                    <span class="metrica-valor" id="microAjustes">&mdash;</span>
+                </div>
+
+                <div class="metrica-item">
+                    <span class="metrica-label">Armadilha</span>
+                    <span class="metrica-valor" id="armadilhaStatus">&mdash;</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="separador"></div>
+
+
+        <div class="resultado-area">
+
+            <a
+                href="/captcha/texto"
+                class="resultados-button secundario">
+                CAPTCHA textual
+            </a>
+
+            <a
+                href="/dashboard/slider"
+                class="resultados-button">
+                Ver resultados
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="/js/captcha_slider.js"></script>
+
+</body>
+
+</html>

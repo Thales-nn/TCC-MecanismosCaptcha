@@ -1,0 +1,11 @@
+package captcha.model.enums;
+
+public enum MotivoRejeicao {
+    RESPOSTA_INCORRETA,
+    POSICAO_FORA_ZONA,
+    ARMADILHA_ACIONADA,
+    TEMPO_MINIMO_NAO_ATINGIDO,
+    DESAFIO_EXPIRADO,
+    DESAFIO_JA_USADO,
+    TENTATIVAS_EXCEDIDAS
+}

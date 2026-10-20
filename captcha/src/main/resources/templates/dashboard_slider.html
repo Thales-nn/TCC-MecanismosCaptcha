@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard - CAPTCHA Deslizante</title>
+
+    <link rel="stylesheet"
+          href="/css/dashboard.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4"></script>
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                &#x1F512;
+            </div>
+
+            <div class="logo-text">
+                <strong>CAPTCHA</strong>
+                <span>TCC Analytics</span>
+            </div>
+
+        </div>
+
+        <nav>
+
+            <a href="/">
+                Inicio
+            </a>
+
+            <a href="/dashboard/texto">
+                Dashboard Textual
+            </a>
+
+            <a href="/dashboard/slider"
+               class="menu-ativo">
+                Dashboard Deslizante
+            </a>
+
+            <a href="/captcha/texto">
+                Teste Textual
+            </a>
+
+            <a href="/captcha/slider">
+                Teste Deslizante
+            </a>
+
+        </nav>
+
+        <div class="sidebar-footer">
+            <div>
+                <strong>Sistema seguro</strong>
+                <small>CAPTCHA ativo</small>
+            </div>
+        </div>
+
+    </aside>
+
+
+    <main class="conteudo">
+
+        <header class="topo">
+
+            <div>
+                <span class="titulo-pequeno">CAPTCHA DESLIZANTE</span>
+                <h1>Dashboard de Resultados</h1>
+                <p>Metricas e analise do CAPTCHA deslizante com armadilha.</p>
+            </div>
+
+            <div class="sessao">
+                <span class="status-online"></span>
+                Sessao ativa
+            </div>
+
+        </header>
+
+
+        <section class="filtros">
+
+            <div class="filtro-grupo">
+                <label for="filtroTipoUsuario">Tipo de Participante</label>
+                <select id="filtroTipoUsuario">
+                    <option value="TODOS">Todos</option>
+                    <option value="HUMANO">Humano</option>
+                    <option value="BOT_SLIDER_1">Bot Slider 1 (simples)</option>
+                    <option value="BOT_SLIDER_2">Bot Slider 2 (avancado)</option>
+                </select>
+            </div>
+
+            <div class="filtro-grupo">
+                <label for="filtroSessao">Sessao Experimental</label>
+                <select id="filtroSessao">
+                    <option value="TODOS">Todas</option>
+                </select>
+            </div>
+
+        </section>
+
+
+        <section class="metricas">
+
+            <div class="card">
+                <div class="card-topo">
+                    <span>Total de tentativas</span>
+                    <div class="card-icone">&#x1F522;</div>
+                </div>
+                <strong id="total">0</strong>
+                <small>Tentativas realizadas</small>
+            </div>
+
+            <div class="card">
+                <div class="card-topo">
+                    <span>Taxa de bloqueio</span>
+                    <div class="card-icone bloqueio">&#x1F6AB;</div>
+                </div>
+                <strong id="taxaBloqueio">-</strong>
+                <small>Bots bloqueados</small>
+            </div>
+
+            <div class="card">
+                <div class="card-topo">
+                    <span>Taxa de evasao</span>
+                    <div class="card-icone evasao">&#x26A0;</div>
+                </div>
+                <strong id="taxaEvasao">-</strong>
+                <small>Bots que passaram</small>
+            </div>
+
+            <div class="card sucesso">
+                <div class="card-topo">
+                    <span>Sucesso humano</span>
+                    <div class="card-icone">&#x2713;</div>
+                </div>
+                <strong id="sucessoHumano">-</strong>
+                <small>Humanos aprovados</small>
+            </div>
+
+            <div class="card erro">
+                <div class="card-topo">
+                    <span>Erro humano</span>
+                    <div class="card-icone">&#x2717;</div>
+                </div>
+                <strong id="erroHumano">-</strong>
+                <small>Humanos com erro</small>
+            </div>
+
+            <div class="card">
+                <div class="card-topo">
+                    <span>Tempo medio</span>
+                    <div class="card-icone">&#x23F1;</div>
+                </div>
+                <strong id="tempoMedio">-</strong>
+                <small>Tempo por tentativa</small>
+            </div>
+
+            <div class="card">
+                <div class="card-topo">
+                    <span>Desvio padrao</span>
+                    <div class="card-icone">&sigma;</div>
+                </div>
+                <strong id="desvioPadrao">-</strong>
+                <small>Dispersao dos tempos</small>
+            </div>
+
+        </section>
+
+
+        <section class="metricas-comportamentais">
+
+            <div class="metricas-comp-cabecalho">
+                <h2>Metricas Comportamentais</h2>
+                <p>Analise de comportamento durante o arraste do slider</p>
+            </div>
+
+            <div class="metricas-comp-grid">
+
+                <div class="card-comp">
+                    <div class="card-comp-icone velocidade">&#x23E9;</div>
+                    <div class="card-comp-dados">
+                        <span>Velocidade media</span>
+                        <strong id="velMedia">-</strong>
+                    </div>
+                </div>
+
+                <div class="card-comp">
+                    <div class="card-comp-icone direcao">&#x21C4;</div>
+                    <div class="card-comp-dados">
+                        <span>Mudancas de direcao (media)</span>
+                        <strong id="mudancasDir">-</strong>
+                    </div>
+                </div>
+
+                <div class="card-comp">
+                    <div class="card-comp-icone micro">&#x1F50D;</div>
+                    <div class="card-comp-dados">
+                        <span>Microajustes (media)</span>
+                        <strong id="microAjustes">-</strong>
+                    </div>
+                </div>
+
+                <div class="card-comp">
+                    <div class="card-comp-icone armadilha">&#x26D4;</div>
+                    <div class="card-comp-dados">
+                        <span>Freq. armadilha ativada</span>
+                        <strong id="freqArmadilha">-</strong>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="comparativo">
+
+            <div class="comparativo-cabecalho">
+                <h2>Comparativo entre Bots</h2>
+                <p>Desempenho do BOT_SLIDER_1 e BOT_SLIDER_2 no CAPTCHA deslizante</p>
+            </div>
+
+            <div class="comparativo-cards">
+
+                <div class="comparativo-card comparativo-bot1">
+                    <div class="comparativo-card-topo">
+                        <span class="comparativo-badge">BOT SLIDER 1</span>
+                        <h3>Simples</h3>
+                    </div>
+                    <div class="comparativo-metrica">
+                        <span>Total de tentativas</span>
+                        <strong id="bot1Total">0</strong>
+                    </div>
+                    <div class="comparativo-metrica">
+                        <span>Taxa de bloqueio</span>
+                        <strong id="bot1Bloqueio">-</strong>
+                    </div>
+                    <div class="comparativo-metrica">
+                        <span>Taxa de evasao</span>
+                        <strong id="bot1Evasao">-</strong>
+                    </div>
+                    <div class="comparativo-metrica">
+                        <span>Tempo medio</span>
+                        <strong id="bot1Tempo">-</strong>
+                    </div>
+                    <div class="comparativo-metrica">
+                        <span>Freq. armadilha</span>
+                        <strong id="bot1Armadilha">-</strong>
+                    </div>
+                </div>
+
+                <div class="comparativo-card comparativo-bot2">
+                    <div class="comparativo-card-topo">
+                        <span class="comparativo-badge badge-bot2">BOT SLIDER 2</span>
+                        <h3>Avancado</h3>
+                    </div>
+                    <div class="comparativo-metrica">
+                        <span>Total de tentativas</span>
+                        <strong id="bot2Total">0</strong>
+                    </div>
+                    <div class="comparativo-metrica">
+                        <span>Taxa de bloqueio</span>
+                        <strong id="bot2Bloqueio">-</strong>
+                    </div>
+                    <div class="comparativo-metrica">
+                        <span>Taxa de evasao</span>
+                        <strong id="bot2Evasao">-</strong>
+                    </div>
+                    <div class="comparativo-metrica">
+                        <span>Tempo medio</span>
+                        <strong id="bot2Tempo">-</strong>
+                    </div>
+                    <div class="comparativo-metrica">
+                        <span>Freq. armadilha</span>
+                        <strong id="bot2Armadilha">-</strong>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="motivos-rejeicao">
+
+            <div class="painel">
+                <div class="painel-cabecalho">
+                    <h2>Motivos de rejeicao</h2>
+                    <p>Distribuicao das causas de falha no CAPTCHA deslizante</p>
+                </div>
+                <div class="canvas-container">
+                    <canvas id="graficoMotivos"></canvas>
+                </div>
+            </div>
+
+        </section>
+
+
+        <section class="graficos">
+
+            <div class="painel">
+                <div class="painel-cabecalho">
+                    <h2>Desempenho da sessao</h2>
+                    <p>Sucessos e erros</p>
+                </div>
+                <div class="canvas-container">
+                    <canvas id="graficoResultados"></canvas>
+                </div>
+            </div>
+
+            <div class="painel">
+                <div class="painel-cabecalho">
+                    <h2>Tempo por tentativa</h2>
+                    <p>Tempo gasto em cada tentativa (ms)</p>
+                </div>
+                <div class="canvas-container">
+                    <canvas id="graficoTempo"></canvas>
+                </div>
+            </div>
+
+        </section>
+
+
+        <section class="painel grafico-comparativo-painel">
+
+            <div class="painel-cabecalho">
+                <h2>Taxa de bloqueio por bot</h2>
+                <p>Comparativo entre BOT_SLIDER_1 e BOT_SLIDER_2</p>
+            </div>
+
+            <div class="canvas-container">
+                <canvas id="graficoBloqueio"></canvas>
+            </div>
+
+        </section>
+
+
+        <section class="painel tabela-painel">
+
+            <div class="painel-cabecalho">
+                <h2>Detalhamento das tentativas</h2>
+                <p>Historico das tentativas do CAPTCHA deslizante</p>
+            </div>
+
+            <div class="tabela-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tentativa</th>
+                            <th>Resultado</th>
+                            <th>Motivo</th>
+                            <th>Tempo</th>
+                            <th>Participante</th>
+                            <th>Armadilha</th>
+                            <th>Sessao</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaResultados">
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+
+        <div class="acoes">
+
+            <a href="/" class="botao-voltar">
+                &larr; Voltar ao inicio
+            </a>
+
+            <a href="/captcha/slider" class="botao-novo">
+                Fazer novo teste
+                <span>&rarr;</span>
+            </a>
+
+        </div>
+
+
+        <footer>
+            TCC &mdash; Efetividade de Mecanismos CAPTCHA
+        </footer>
+
+    </main>
+
+</div>
+
+
+<script src="/js/dashboard_slider.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CAPTCHA Textual - TCC</title>
+
+    <link rel="stylesheet"
+          href="/css/captcha_texto.css">
+
+</head>
+
+<body>
+
+<div class="captcha-container">
+
+    <div class="captcha-card">
+
+        <div class="captcha-header">
+
+            <div class="shield">
+                &#x1F6E1;
+            </div>
+
+            <div>
+
+                <h1>Verificacao de seguranca</h1>
+
+                <p>Digite o codigo apresentado na imagem abaixo</p>
+
+            </div>
+
+        </div>
+
+
+        <div class="captcha-area">
+
+            <div class="captcha-imagem-container">
+
+                <img
+                    id="captchaImagem"
+                    src=""
+                    alt="CAPTCHA"
+                    class="captcha-imagem">
+
+                <div
+                    id="captchaCarregando"
+                    class="captcha-carregando">
+                    Carregando...
+                </div>
+
+            </div>
+
+            <button
+                type="button"
+                id="refreshCaptcha"
+                class="refresh-button">
+                &#x21bb; Novo codigo
+            </button>
+
+        </div>
+
+
+        <form id="captchaForm">
+
+            <label for="codigo">
+                Codigo de verificacao
+            </label>
+
+            <input
+                type="text"
+                id="codigo"
+                name="codigo"
+                maxlength="6"
+                autocomplete="off"
+                placeholder="Digite o codigo"
+                required>
+
+            <button
+                type="submit"
+                id="btnVerificar"
+                class="verificar-button">
+                Verificar CAPTCHA
+            </button>
+
+        </form>
+
+
+        <div
+            id="mensagem"
+            class="mensagem">
+        </div>
+
+
+        <div class="separador"></div>
+
+
+        <div class="resultado-area">
+
+            <a
+                href="/captcha/slider"
+                class="resultados-button secundario">
+                CAPTCHA deslizante
+            </a>
+
+            <a
+                href="/dashboard/texto"
+                class="resultados-button">
+                Ver resultados
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="/js/captcha_texto.js"></script>
+
+</body>
+
+</html>
