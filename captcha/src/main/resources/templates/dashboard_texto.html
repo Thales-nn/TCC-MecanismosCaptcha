@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard - CAPTCHA Textual</title>
+
+    <link rel="stylesheet"
+          href="/css/dashboard.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4"></script>
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                &#x1F6E1;
+            </div>
+
+            <div class="logo-text">
+                <strong>CAPTCHA</strong>
+                <span>TCC Analytics</span>
+            </div>
+
+        </div>
+
+        <nav>
+
+            <a href="/">
+                Inicio
+            </a>
+
+            <a href="/dashboard/texto"
+               class="menu-ativo">
+                Dashboard Textual
+            </a>
+
+            <a href="/dashboard/slider">
+                Dashboard Deslizante
+            </a>
+
+            <a href="/captcha/texto">
+                Teste Textual
+            </a>
+
+            <a href="/captcha/slider">
+                Teste Deslizante
+            </a>
+
+        </nav>
+
+        <div class="sidebar-footer">
+            <div>
+                <strong>Sistema seguro</strong>
+                <small>CAPTCHA ativo</small>
+            </div>
+        </div>
+
+    </aside>
+
+
+    <main class="conteudo">
+
+        <header class="topo">
+
+            <div>
+                <span class="titulo-pequeno">CAPTCHA TEXTUAL</span>
+                <h1>Dashboard de Resultados</h1>
+                <p>Metricas e analise do CAPTCHA textual.</p>
+            </div>
+
+            <div class="sessao">
+                <span class="status-online"></span>
+                Sessao ativa
+            </div>
+
+        </header>
+
+
+        <section class="filtros">
+
+            <div class="filtro-grupo">
+                <label for="filtroTipoUsuario">Tipo de Participante</label>
+                <select id="filtroTipoUsuario">
+                    <option value="TODOS">Todos</option>
+                    <option value="HUMANO">Humano</option>
+                    <option value="BOT_1">Bot 1 (OCR basico)</option>
+                    <option value="BOT_2">Bot 2 (OCR avancado)</option>
+                </select>
+            </div>
+
+            <div class="filtro-grupo">
+                <label for="filtroSessao">Sessao Experimental</label>
+                <select id="filtroSessao">
+                    <option value="TODOS">Todas</option>
+                </select>
+            </div>
+
+        </section>
+
+
+        <section class="metricas">
+
+            <div class="card">
+                <div class="card-topo">
+                    <span>Total de tentativas</span>
+                    <div class="card-icone">&#x1F522;</div>
+                </div>
+                <strong id="total">0</strong>
+                <small>Tentativas realizadas</small>
+            </div>
+
+            <div class="card">
+                <div class="card-topo">
+                    <span>Taxa de bloqueio</span>
+                    <div class="card-icone bloqueio">&#x1F6AB;</div>
+                </div>
+                <strong id="taxaBloqueio">-</strong>
+                <small>Bots bloqueados</small>
+            </div>
+
+            <div class="card">
+                <div class="card-topo">
+                    <span>Taxa de evasao</span>
+                    <div class="card-icone evasao">&#x26A0;</div>
+                </div>
+                <strong id="taxaEvasao">-</strong>
+                <small>Bots que passaram</small>
+            </div>
+
+            <div class="card sucesso">
+                <div class="card-topo">
+                    <span>Sucesso humano</span>
+                    <div class="card-icone">&#x2713;</div>
+                </div>
+                <strong id="sucessoHumano">-</strong>
+                <small>Humanos aprovados</small>
+            </div>
+
+            <div class="card erro">
+                <div class="card-topo">
+                    <span>Erro humano</span>
+                    <div class="card-icone">&#x2717;</div>
+                </div>
+                <strong id="erroHumano">-</strong>
+                <small>Humanos com erro</small>
+            </div>
+
+            <div class="card">
+                <div class="card-topo">
+                    <span>Tempo medio</span>
+                    <div class="card-icone">&#x23F1;</div>
+                </div>
+                <strong id="tempoMedio">-</strong>
+                <small>Tempo por tentativa</small>
+            </div>
+
+            <div class="card">
+                <div class="card-topo">
+                    <span>Desvio padrao</span>
+                    <div class="card-icone">&sigma;</div>
+                </div>
+                <strong id="desvioPadrao">-</strong>
+                <small>Dispersao dos tempos</small>
+            </div>
+
+        </section>
+
+
+        <section class="comparativo">
+
+            <div class="comparativo-cabecalho">
+                <h2>Comparativo entre Bots</h2>
+                <p>Desempenho do BOT_1 e BOT_2 no CAPTCHA textual</p>
+            </div>
+
+            <div class="comparativo-cards">
+
+                <div class="comparativo-card comparativo-bot1">
+                    <div class="comparativo-card-topo">
+                        <span class="comparativo-badge">BOT 1</span>
+                        <h3>OCR Basico</h3>
+                    </div>
+                    <div class="comparativo-metrica">
+                        <span>Total de tentativas</span>
+                        <strong id="bot1Total">0</strong>
+                    </div>
+                    <div class="comparativo-metrica">
+                        <span>Taxa de bloqueio</span>
+                        <strong id="bot1Bloqueio">-</strong>
+                    </div>
+                    <div class="comparativo-metrica">
+                        <span>Taxa de evasao</span>
+                        <strong id="bot1Evasao">-</strong>
+                    </div>
+                    <div class="comparativo-metrica">
+                        <span>Tempo medio</span>
+                        <strong id="bot1Tempo">-</strong>
+                    </div>
+                </div>
+
+                <div class="comparativo-card comparativo-bot2">
+                    <div class="comparativo-card-topo">
+                        <span class="comparativo-badge badge-bot2">BOT 2</span>
+                        <h3>OCR Avancado</h3>
+                    </div>
+                    <div class="comparativo-metrica">
+                        <span>Total de tentativas</span>
+                        <strong id="bot2Total">0</strong>
+                    </div>
+                    <div class="comparativo-metrica">
+                        <span>Taxa de bloqueio</span>
+                        <strong id="bot2Bloqueio">-</strong>
+                    </div>
+                    <div class="comparativo-metrica">
+                        <span>Taxa de evasao</span>
+                        <strong id="bot2Evasao">-</strong>
+                    </div>
+                    <div class="comparativo-metrica">
+                        <span>Tempo medio</span>
+                        <strong id="bot2Tempo">-</strong>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="graficos">
+
+            <div class="painel">
+                <div class="painel-cabecalho">
+                    <h2>Desempenho da sessao</h2>
+                    <p>Sucessos e erros</p>
+                </div>
+                <div class="canvas-container">
+                    <canvas id="graficoResultados"></canvas>
+                </div>
+            </div>
+
+            <div class="painel">
+                <div class="painel-cabecalho">
+                    <h2>Tempo por tentativa</h2>
+                    <p>Tempo gasto em cada tentativa (ms)</p>
+                </div>
+                <div class="canvas-container">
+                    <canvas id="graficoTempo"></canvas>
+                </div>
+            </div>
+
+        </section>
+
+
+        <section class="painel grafico-comparativo-painel">
+
+            <div class="painel-cabecalho">
+                <h2>Taxa de bloqueio por bot</h2>
+                <p>Comparativo entre BOT_1 e BOT_2</p>
+            </div>
+
+            <div class="canvas-container">
+                <canvas id="graficoBloqueio"></canvas>
+            </div>
+
+        </section>
+
+
+        <section class="painel tabela-painel">
+
+            <div class="painel-cabecalho">
+                <h2>Detalhamento das tentativas</h2>
+                <p>Historico das tentativas do CAPTCHA textual</p>
+            </div>
+
+            <div class="tabela-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tentativa</th>
+                            <th>Resultado</th>
+                            <th>Motivo</th>
+                            <th>Tempo</th>
+                            <th>Participante</th>
+                            <th>Sessao</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaResultados">
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+
+        <div class="acoes">
+
+            <a href="/" class="botao-voltar">
+                &larr; Voltar ao inicio
+            </a>
+
+            <a href="/captcha/texto" class="botao-novo">
+                Fazer novo teste
+                <span>&rarr;</span>
+            </a>
+
+        </div>
+
+
+        <footer>
+            TCC &mdash; Efetividade de Mecanismos CAPTCHA
+        </footer>
+
+    </main>
+
+</div>
+
+
+<script src="/js/dashboard_texto.js"></script>
+
+</body>
+
+</html>

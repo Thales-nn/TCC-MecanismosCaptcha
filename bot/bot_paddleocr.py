@@ -1,5 +1,6 @@
 import time
 import re
+import os
 import platform
 
 import cv2
@@ -10,34 +11,37 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+from config import (
+    LOGIN_TEXTO_URL,
+    CAPTCHA_TEXTO_URL,
+    USUARIO,
+    SENHA,
+    NUMERO_TESTES,
+    SESSAO_EXPERIMENTAL,
+    CHROME_WIN_PATH,
+    TESSERACT_WIN_PATH,
+    CARACTERES,
+)
 
 
 # =========================================================
-# CONFIGURAÇÕES
+# CONFIGURAÇÃO DO TESSERACT
 # =========================================================
-
-URL = "http://localhost:8080/captcha"
-
-NUMERO_TESTES = 50
-
-TIPO_BOT = "BOT_2"
 
 if platform.system() == "Windows":
-    pytesseract.pytesseract.tesseract_cmd = (
-        r"C:\Program Files\Tesseract-OCR\tesseract.exe"
-    )
-
-CARACTERES = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
+    pytesseract.pytesseract.tesseract_cmd = TESSERACT_WIN_PATH
 
 
 # =========================================================
 # SESSÃO DO BOT
 # =========================================================
 
-sessao_id = (
-    "BOT-2-" +
-    str(int(time.time() * 1000))
-)
+TIPO_BOT = "BOT_2"
+
+sessao_id = "BOT-2-" + str(int(time.time() * 1000))
 
 
 # =========================================================
@@ -45,37 +49,37 @@ sessao_id = (
 # =========================================================
 
 opcoes = Options()
-
 opcoes.add_argument("--start-maximized")
 
-import os
+if os.path.exists(CHROME_WIN_PATH):
+    opcoes.binary_location = CHROME_WIN_PATH
 
-chrome_win = "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe"
-
-if os.path.exists(chrome_win):
-
-    opcoes.binary_location = chrome_win
-
-driver = webdriver.Chrome(
-    options=opcoes
-)
+driver = webdriver.Chrome(options=opcoes)
+wait = WebDriverWait(driver, 10)
 
 
 # =========================================================
-# ABRIR CAPTCHA
+# LOGIN
 # =========================================================
 
 print()
 print("=" * 60)
-print("BOT 2 - OCR AVANÇADO")
+print("BOT 2 — OCR AVANÇADO")
 print("=" * 60)
 print()
+print("Realizando login...")
 
-print("Abrindo CAPTCHA...")
-
-driver.get(URL)
-
+driver.get(LOGIN_TEXTO_URL)
 time.sleep(1)
+
+wait.until(EC.presence_of_element_located((By.ID, "usuario"))).send_keys(USUARIO)
+driver.find_element(By.ID, "senha").send_keys(SENHA)
+driver.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
+
+wait.until(EC.url_contains("/captcha/texto"))
+time.sleep(1)
+
+print("Login realizado com sucesso!")
 
 
 # =========================================================
@@ -84,105 +88,50 @@ time.sleep(1)
 
 driver.execute_script(
     """
-    sessionStorage.setItem(
-        "tipoUsuario",
-        "BOT_2"
-    );
-
-    sessionStorage.setItem(
-        "sessaoCaptcha",
-        arguments[0]
-    );
+    sessionStorage.setItem("tipoUsuario", arguments[0]);
+    sessionStorage.setItem("sessaoCaptcha", arguments[1]);
+    sessionStorage.setItem("sessaoExperimental", arguments[2]);
     """,
-    sessao_id
+    TIPO_BOT,
+    sessao_id,
+    SESSAO_EXPERIMENTAL,
 )
 
 driver.refresh()
-
 time.sleep(1)
 
-print("CAPTCHA aberto!")
-print()
 print("Sessão:", sessao_id)
 print("Testes:", NUMERO_TESTES)
 print()
 
 
 # =========================================================
-# CAPTURAR CAPTCHA
+# CAPTURAR CAPTCHA (IMG)
 # =========================================================
 
 def capturar_captcha():
-
-    canvas = driver.find_element(
-        By.ID,
-        "captchaCanvas"
+    elemento = wait.until(
+        EC.presence_of_element_located((By.ID, "captchaImagem"))
     )
-
-    imagem_png = canvas.screenshot_as_png
-
-    array = np.frombuffer(
-        imagem_png,
-        dtype=np.uint8
-    )
-
-    imagem = cv2.imdecode(
-        array,
-        cv2.IMREAD_COLOR
-    )
-
+    imagem_png = elemento.screenshot_as_png
+    array = np.frombuffer(imagem_png, dtype=np.uint8)
+    imagem = cv2.imdecode(array, cv2.IMREAD_COLOR)
     if imagem is None:
-
-        raise Exception(
-            "Erro ao capturar CAPTCHA."
-        )
-
+        raise Exception("Erro ao capturar CAPTCHA.")
     return imagem
 
 
 # =========================================================
-# PREPARAR IMAGEM
+# PREPARAR IMAGEM (pré-processamento avançado)
 # =========================================================
 
 def preparar_imagem(imagem):
-
-    cinza = cv2.cvtColor(
-        imagem,
-        cv2.COLOR_BGR2GRAY
-    )
-
-    ampliada = cv2.resize(
-        cinza,
-        None,
-        fx=5,
-        fy=5,
-        interpolation=cv2.INTER_CUBIC
-    )
-
-    suavizada = cv2.GaussianBlur(
-        ampliada,
-        (3, 3),
-        0
-    )
-
-    _, binaria = cv2.threshold(
-        suavizada,
-        170,
-        255,
-        cv2.THRESH_BINARY
-    )
-
-    kernel = np.ones(
-        (2, 2),
-        np.uint8
-    )
-
-    limpa = cv2.morphologyEx(
-        binaria,
-        cv2.MORPH_OPEN,
-        kernel
-    )
-
+    cinza = cv2.cvtColor(imagem, cv2.COLOR_BGR2GRAY)
+    ampliada = cv2.resize(cinza, None, fx=5, fy=5, interpolation=cv2.INTER_CUBIC)
+    suavizada = cv2.GaussianBlur(ampliada, (3, 3), 0)
+    _, binaria = cv2.threshold(suavizada, 170, 255, cv2.THRESH_BINARY)
+    kernel = np.ones((2, 2), np.uint8)
+    limpa = cv2.morphologyEx(binaria, cv2.MORPH_OPEN, kernel)
     return limpa
 
 
@@ -191,52 +140,27 @@ def preparar_imagem(imagem):
 # =========================================================
 
 def limpar_texto(texto):
-
     texto = texto.upper()
-
-    texto = re.sub(
-        r"[^A-Z2-9]",
-        "",
-        texto
-    )
-
+    texto = re.sub(r"[^A-Z2-9]", "", texto)
     return texto
 
 
 # =========================================================
-# OCR COMPLETO
+# OCR COMPLETO (múltiplos PSMs)
 # =========================================================
 
 def ocr_completo(imagem):
-
-    configuracoes = [
-        "--psm 7",
-        "--psm 8",
-        "--psm 13"
-    ]
-
+    configuracoes = ["--psm 7", "--psm 8", "--psm 13"]
     resultados = []
 
     for configuracao in configuracoes:
-
         texto = pytesseract.image_to_string(
             imagem,
-            config=(
-                configuracao +
-                " -c tessedit_char_whitelist=" +
-                CARACTERES
-            )
+            config=configuracao + " -c tessedit_char_whitelist=" + CARACTERES,
         )
-
-        texto = limpar_texto(
-            texto
-        )
-
+        texto = limpar_texto(texto)
         if texto:
-
-            resultados.append(
-                texto[:6]
-            )
+            resultados.append(texto[:6])
 
     return resultados
 
@@ -246,176 +170,68 @@ def ocr_completo(imagem):
 # =========================================================
 
 def ocr_por_caractere(imagem):
-
     altura, largura = imagem.shape
-
     resultados = []
-
-    largura_caractere = (
-        largura / 6
-    )
+    largura_caractere = largura / 6
 
     for i in range(6):
-
-        inicio = int(
-            i * largura_caractere
-        )
-
-        fim = int(
-            (i + 1) *
-            largura_caractere
-        )
-
-        recorte = imagem[
-            :,
-            inicio:fim
-        ]
-
+        inicio_x = int(i * largura_caractere)
+        fim_x = int((i + 1) * largura_caractere)
+        recorte = imagem[:, inicio_x:fim_x]
         recorte = cv2.copyMakeBorder(
-            recorte,
-            20,
-            20,
-            20,
-            20,
-            cv2.BORDER_CONSTANT,
-            value=255
+            recorte, 20, 20, 20, 20, cv2.BORDER_CONSTANT, value=255
         )
 
         melhor = ""
-
-        for psm in [
-            10,
-            8,
-            13
-        ]:
-
+        for psm in [10, 8, 13]:
             texto = pytesseract.image_to_string(
                 recorte,
-                config=(
-                    f"--psm {psm} "
-                    "-c tessedit_char_whitelist=" +
-                    CARACTERES
-                )
+                config=f"--psm {psm} -c tessedit_char_whitelist=" + CARACTERES,
             )
-
-            texto = limpar_texto(
-                texto
-            )
-
+            texto = limpar_texto(texto)
             if texto:
-
                 melhor = texto[0]
-
                 break
 
-        resultados.append(
-            melhor
-        )
+        resultados.append(melhor)
 
-    return "".join(
-        resultados
-    )
+    return "".join(resultados)
 
 
 # =========================================================
-# RECONHECER CAPTCHA
+# RECONHECER CAPTCHA (estratégia combinada)
 # =========================================================
 
 def reconhecer_captcha(imagem):
+    print("    Processando imagem...")
+    imagem_processada = preparar_imagem(imagem)
 
-    print(
-        "    Processando imagem..."
-    )
+    candidatos = ocr_completo(imagem_processada)
+    print(f"    OCR completo: {candidatos}")
 
-    imagem_processada = (
-        preparar_imagem(imagem)
-    )
-
-
-    # =====================================================
-    # OCR COMPLETO
-    # =====================================================
-
-    candidatos = ocr_completo(
-        imagem_processada
-    )
-
-    print(
-        f"    OCR completo: {candidatos}"
-    )
-
-
-    # =====================================================
-    # OCR INDIVIDUAL
-    # =====================================================
-
-    individual = ocr_por_caractere(
-        imagem_processada
-    )
-
-    print(
-        f"    OCR individual: '{individual}'"
-    )
-
-
-    # =====================================================
-    # ESCOLHER PALPITE
-    # =====================================================
+    individual = ocr_por_caractere(imagem_processada)
+    print(f"    OCR individual: '{individual}'")
 
     palpite = ""
 
-
-    # Procurar candidato com 6 caracteres
-
     for candidato in candidatos:
-
         if len(candidato) == 6:
-
             palpite = candidato
-
             break
 
+    if not palpite and len(individual) == 6:
+        palpite = individual
 
-    # Se não encontrou, usar OCR individual
-
-    if not palpite:
-
-        if len(individual) == 6:
-
-            palpite = individual
-
-
-    # Se ainda não encontrou,
-    # usar primeiro resultado
-
-    if not palpite:
-
-        if candidatos:
-
-            palpite = candidatos[0]
-
+    if not palpite and candidatos:
+        palpite = candidatos[0]
 
     print()
-
-    print(
-        "    --------------------------------"
-    )
-
+    print("    --------------------------------")
     if palpite:
-
-        print(
-            f"    PALPITE DO BOT 2: {palpite}"
-        )
-
+        print(f"    PALPITE DO BOT 2: {palpite}")
     else:
-
-        print(
-            "    PALPITE DO BOT 2: [NENHUM]"
-        )
-
-    print(
-        "    --------------------------------"
-    )
+        print("    PALPITE DO BOT 2: [NENHUM]")
+    print("    --------------------------------")
 
     return palpite
 
@@ -425,182 +241,63 @@ def reconhecer_captcha(imagem):
 # =========================================================
 
 sucessos = 0
-
 erros = 0
-
 nao_reconhecidos = 0
-
 
 print("=" * 60)
 print("INICIANDO TESTES DO BOT 2")
 print("=" * 60)
 print()
 
-
-for tentativa in range(
-    1,
-    NUMERO_TESTES + 1
-):
-
-    print(
-        f"[{tentativa}/{NUMERO_TESTES}] "
-        "Lendo CAPTCHA..."
-    )
-
+for tentativa in range(1, NUMERO_TESTES + 1):
+    print(f"[{tentativa}/{NUMERO_TESTES}] Lendo CAPTCHA...")
     inicio = time.time()
 
     try:
-
-        # =================================================
-        # CAPTURAR
-        # =================================================
-
         imagem = capturar_captcha()
 
-
-        # =================================================
-        # OCR
-        # =================================================
-
-        codigo = reconhecer_captcha(
-            imagem
-        )
-
-
-        # =================================================
-        # NÃO RECONHECEU
-        # =================================================
+        codigo = reconhecer_captcha(imagem)
 
         if not codigo:
-
-            print(
-                "    ✕ BOT 2 NÃO RECONHECEU"
-            )
-
+            print("    ✕ BOT 2 NÃO RECONHECEU")
             nao_reconhecidos += 1
-
             erros += 1
-
             time.sleep(1)
-
             continue
 
-
-        # =================================================
-        # LIMITAR A 6 CARACTERES
-        # =================================================
-
         codigo = codigo[:6]
+        print(f"    Enviando palpite: {codigo}")
 
-
-        print(
-            f"    Enviando palpite: {codigo}"
+        campo = wait.until(
+            EC.presence_of_element_located((By.ID, "codigo"))
         )
-
-
-        # =================================================
-        # CAMPO
-        # =================================================
-
-        campo = driver.find_element(
-            By.ID,
-            "codigo"
-        )
-
         campo.clear()
+        campo.send_keys(codigo)
+        campo.send_keys(Keys.ENTER)
 
-        campo.send_keys(
-            codigo
-        )
+        time.sleep(1)
 
+        mensagem = driver.find_element(By.ID, "mensagem").text
+        tempo = time.time() - inicio
 
-        # =================================================
-        # ENVIAR
-        # =================================================
-
-        campo.send_keys(
-            Keys.ENTER
-        )
-
-
-        # =================================================
-        # ESPERAR RESPOSTA
-        # =================================================
-
-        time.sleep(0.8)
-
-
-        # =================================================
-        # LER MENSAGEM
-        # =================================================
-
-        mensagem = driver.find_element(
-            By.ID,
-            "mensagem"
-        ).text
-
-
-        tempo = (
-            time.time() -
-            inicio
-        )
-
-
-        # =================================================
-        # RESULTADO
-        # =================================================
-
-        if "correto" in mensagem.lower():
-
+        if "correto" in mensagem.lower() or "sucesso" in mensagem.lower():
             sucessos += 1
-
-            print(
-                "    ✓ SUCESSO"
-            )
-
+            print("    ✓ SUCESSO")
         else:
-
             erros += 1
+            print("    ✕ ERRO")
 
-            print(
-                "    ✕ ERRO"
-            )
-
-
-        print(
-            f"    Tempo: {tempo:.2f}s"
-        )
-
-        print(
-            "    Resultado será salvo pelo captcha.js."
-        )
-
+        print(f"    Tempo: {tempo:.2f}s")
         print()
-
-
-        # =================================================
-        # ESPERAR PRÓXIMO CAPTCHA
-        # =================================================
 
         if tentativa < NUMERO_TESTES:
+            time.sleep(1.5)
 
-            time.sleep(1)
-
-
-    except Exception as erro:
-
+    except Exception as erro_exc:
         erros += 1
-
-        print(
-            "    ✕ ERRO NO TESTE"
-        )
-
-        print(
-            f"    {erro}"
-        )
-
+        print("    ✕ ERRO NO TESTE")
+        print(f"    {erro_exc}")
         print()
-
         time.sleep(1)
 
 
@@ -608,47 +305,20 @@ for tentativa in range(
 # RESULTADO FINAL
 # =========================================================
 
-taxa = (
-    sucessos /
-    NUMERO_TESTES
-) * 100
-
+taxa = (sucessos / NUMERO_TESTES) * 100
 
 print()
 print("=" * 60)
-print("RESULTADO FINAL - BOT 2")
+print("RESULTADO FINAL — BOT 2")
+print("=" * 60)
+print(f"Testes: {NUMERO_TESTES}")
+print(f"Sucessos: {sucessos}")
+print(f"Erros: {erros}")
+print(f"Não reconhecidos: {nao_reconhecidos}")
+print(f"Taxa de sucesso: {taxa:.2f}%")
+print(f"Sessão: {sessao_id}")
 print("=" * 60)
 
-print(
-    f"Testes: {NUMERO_TESTES}"
-)
-
-print(
-    f"Sucessos: {sucessos}"
-)
-
-print(
-    f"Erros: {erros}"
-)
-
-print(
-    f"Não reconhecidos: {nao_reconhecidos}"
-)
-
-print(
-    f"Taxa de sucesso: {taxa:.2f}%"
-)
-
-print(
-    f"Sessão: {sessao_id}"
-)
-
-print("=" * 60)
-
-
-input(
-    "\nPressione ENTER para fechar..."
-)
-
+input("\nPressione ENTER para fechar...")
 
 driver.quit()

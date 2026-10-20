@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Login - CAPTCHA Deslizante</title>
+
+    <link rel="stylesheet"
+          href="/css/login.css">
+
+</head>
+
+<body>
+
+<div class="pagina">
+
+    <div class="login-card">
+
+        <div class="logo">
+            &#x1F512;
+        </div>
+
+        <h1>CAPTCHA Deslizante</h1>
+
+        <p class="subtitulo">
+            Autenticacao para o experimento de CAPTCHA deslizante
+        </p>
+
+        <form action="/login/slider"
+              method="post">
+
+            <label for="usuario">
+                Usuario
+            </label>
+
+            <input
+                type="text"
+                id="usuario"
+                name="username"
+                placeholder="Digite seu usuario"
+                required>
+
+            <label for="senha">
+                Senha
+            </label>
+
+            <input
+                type="password"
+                id="senha"
+                name="senha"
+                placeholder="Digite sua senha"
+                required>
+
+            <button
+                type="submit"
+                class="login-button">
+                Entrar
+            </button>
+
+        </form>
+
+        <div class="erro">
+            <span th:if="${erro}"
+                  th:text="${erro}">
+            </span>
+        </div>
+
+        <div class="login-info">
+
+            <strong>Acesso de teste</strong>
+
+            <span>Usuario: admin</span>
+
+            <span>Senha: 1234</span>
+
+        </div>
+
+        <a href="/"
+           class="login-link-resultados">
+            &larr; Voltar para a pagina inicial
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
